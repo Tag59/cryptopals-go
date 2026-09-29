@@ -45,3 +45,19 @@ func SingleByte(b []byte, k byte) []byte {
 	}
 	return out
 }
+
+// ErrEmptyKey is returned when a repeating-key XOR is given no key.
+var ErrEmptyKey = errors.New("xorutil: empty key")
+
+// RepeatingKey XORs b with key repeated cyclically (Vigenère over bytes):
+// out[i] = b[i] ^ key[i mod len(key)]. Encryption and decryption are the same.
+func RepeatingKey(b, key []byte) ([]byte, error) {
+	if len(key) == 0 {
+		return nil, ErrEmptyKey
+	}
+	out := make([]byte, len(b))
+	for i, c := range b {
+		out[i] = c ^ key[i%len(key)]
+	}
+	return out, nil
+}

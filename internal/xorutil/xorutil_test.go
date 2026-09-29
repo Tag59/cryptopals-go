@@ -18,3 +18,24 @@ func TestFixedLengthMismatch(t *testing.T) {
 		t.Errorf("Fixed: got err %v, want ErrLengthMismatch", err)
 	}
 }
+
+func TestRepeatingKeyRoundTrip(t *testing.T) {
+	pt, key := []byte("round trip"), []byte("key")
+	ct, err := RepeatingKey(pt, key)
+	if err != nil {
+		t.Fatal(err)
+	}
+	back, err := RepeatingKey(ct, key)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if string(back) != string(pt) {
+		t.Errorf("round trip = %q, want %q", back, pt)
+	}
+}
+
+func TestRepeatingKeyEmptyKey(t *testing.T) {
+	if _, err := RepeatingKey([]byte("x"), nil); !errors.Is(err, ErrEmptyKey) {
+		t.Errorf("got err %v, want ErrEmptyKey", err)
+	}
+}
