@@ -52,6 +52,40 @@ func TestBreakRepeatingKeyXORRoundTrip(t *testing.T) {
 	}
 }
 
+func TestBreakManyTimePad(t *testing.T) {
+	// Cut a continuous English text into equal-length lines: each column is
+	// then a fair sample of English, about 30 bytes per column.
+	text := "when a stream cipher reuses its keystream, every ciphertext leaks " +
+		"information about every other one. the attacker does not need the key: " +
+		"stacking the messages on top of each other turns each column into a " +
+		"tiny puzzle with only two hundred and fifty six possible answers, and " +
+		"the statistics of written english pick the right one almost every time. " +
+		"this is why protocols insist that a nonce must never be used twice with " +
+		"the same key, and why random nonces must be long enough that collisions " +
+		"are out of reach. history is full of systems that forgot this simple rule " +
+		"and paid for it, from wartime teleprinters to wireless network protocols."
+	const width = 20
+	ks := []byte("0123456789ABCDEFGHIJ")
+	var cts [][]byte
+	for i := 0; i+width <= len(text); i += width {
+		ct, err := xorutil.Fixed([]byte(text[i:i+width]), ks)
+		if err != nil {
+			t.Fatal(err)
+		}
+		cts = append(cts, ct)
+	}
+	got, err := BreakManyTimePad(cts)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if string(got) != string(ks) {
+		t.Errorf("keystream = %q, want %q (%d lines)", got, ks, len(cts))
+	}
+	if _, err := BreakManyTimePad(nil); !errors.Is(err, ErrEmptyInput) {
+		t.Errorf("empty input: got err %v, want ErrEmptyInput", err)
+	}
+}
+
 func TestGuessKeySizesInvalidRange(t *testing.T) {
 	for _, r := range [][2]int{{0, 5}, {5, 4}, {40, 50}} {
 		if _, err := GuessKeySizes([]byte("short"), r[0], r[1]); !errors.Is(err, ErrKeySizeRange) {
