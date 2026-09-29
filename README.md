@@ -93,7 +93,7 @@ so the tests stay spoiler-free while still failing on any regression.
 | 29 | Break a SHA-1 keyed MAC using length extension | ✅ |
 | 30 | Break an MD4 keyed MAC using length extension | ✅ |
 | 31 | Implement and break HMAC-SHA1 with an artificial timing leak | ✅ |
-| 32 | Break HMAC-SHA1 with a slightly less artificial timing leak | ⬜ |
+| 32 | Break HMAC-SHA1 with a slightly less artificial timing leak | ✅ |
 
 ## Credits
 
