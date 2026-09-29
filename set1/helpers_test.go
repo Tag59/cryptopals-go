@@ -26,7 +26,7 @@ func assertSHA256(t *testing.T, got []byte, wantHex string) {
 	t.Helper()
 	sum := sha256.Sum256(got)
 	if hex.EncodeToString(sum[:]) != wantHex {
-		t.Errorf("plaintext SHA-256 = %x, want %s", sum, wantHex)
+		t.Errorf("SHA-256 = %x, want %s", sum, wantHex)
 	}
 }
 
