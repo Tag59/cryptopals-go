@@ -5,6 +5,8 @@ package aesutil
 
 import (
 	"crypto/aes"
+	"crypto/cipher"
+	"crypto/rand"
 	"errors"
 	"fmt"
 )
@@ -16,6 +18,23 @@ const BlockSize = aes.BlockSize
 // the block size. Modes here never pad implicitly: padding is an explicit,
 // separate step, which is exactly where later challenges attack.
 var ErrNotBlockAligned = errors.New("aesutil: input is not a multiple of the block size")
+
+// RandomBytes returns n bytes from the OS CSPRNG. Even in attack demos, keys
+// and IVs come from crypto/rand: the attacks must not rely on weak randomness.
+func RandomBytes(n int) []byte {
+	b := make([]byte, n)
+	rand.Read(b) // never returns an error since Go 1.24
+	return b
+}
+
+// newBlock wraps aes.NewCipher with a package-prefixed error.
+func newBlock(key []byte) (cipher.Block, error) {
+	block, err := aes.NewCipher(key)
+	if err != nil {
+		return nil, fmt.Errorf("aesutil: %w", err)
+	}
+	return block, nil
+}
 
 // ECBEncrypt encrypts each 16-byte block independently with the same key.
 // Identical plaintext blocks give identical ciphertext blocks: ECB leaks the
@@ -51,9 +70,9 @@ func RepeatedBlocks(b []byte, blockSize int) (int, error) {
 }
 
 func ecb(key, in []byte, encrypt bool) ([]byte, error) {
-	block, err := aes.NewCipher(key)
+	block, err := newBlock(key)
 	if err != nil {
-		return nil, fmt.Errorf("aesutil: %w", err)
+		return nil, err
 	}
 	if len(in)%BlockSize != 0 {
 		return nil, fmt.Errorf("%w (%d bytes)", ErrNotBlockAligned, len(in))
