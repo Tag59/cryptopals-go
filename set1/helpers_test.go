@@ -2,6 +2,7 @@ package set1_test
 
 import (
 	"crypto/sha256"
+	"encoding/base64"
 	"encoding/hex"
 	"os"
 	"strings"
@@ -43,4 +44,14 @@ func readLines(t *testing.T, path string) []string {
 		}
 	}
 	return lines
+}
+
+// readBase64File decodes a base64 testdata file (line breaks are ignored).
+func readBase64File(t *testing.T, path string) []byte {
+	t.Helper()
+	b, err := base64.StdEncoding.DecodeString(strings.Join(readLines(t, path), ""))
+	if err != nil {
+		t.Fatalf("decode base64 %s: %v", path, err)
+	}
+	return b
 }

@@ -7,6 +7,7 @@ import (
 	"encoding/hex"
 	"errors"
 	"fmt"
+	"math/bits"
 )
 
 // HexToBase64 decodes a hex string and re-encodes the raw bytes as standard
@@ -60,4 +61,18 @@ func RepeatingKey(b, key []byte) ([]byte, error) {
 		out[i] = c ^ key[i%len(key)]
 	}
 	return out, nil
+}
+
+// HammingDistance counts the differing bits between two equal-length buffers,
+// i.e. the population count of a ^ b.
+func HammingDistance(a, b []byte) (int, error) {
+	x, err := Fixed(a, b)
+	if err != nil {
+		return 0, err
+	}
+	d := 0
+	for _, c := range x {
+		d += bits.OnesCount8(c)
+	}
+	return d, nil
 }

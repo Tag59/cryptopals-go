@@ -39,3 +39,13 @@ func TestRepeatingKeyEmptyKey(t *testing.T) {
 		t.Errorf("got err %v, want ErrEmptyKey", err)
 	}
 }
+
+func TestHammingDistance(t *testing.T) {
+	d, err := HammingDistance([]byte("this is a test"), []byte("wokka wokka!!!"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	if d != 37 {
+		t.Errorf("HammingDistance = %d, want 37", d)
+	}
+}
