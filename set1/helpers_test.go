@@ -3,6 +3,8 @@ package set1_test
 import (
 	"crypto/sha256"
 	"encoding/hex"
+	"os"
+	"strings"
 	"testing"
 )
 
@@ -25,4 +27,20 @@ func assertSHA256(t *testing.T, got []byte, wantHex string) {
 	if hex.EncodeToString(sum[:]) != wantHex {
 		t.Errorf("plaintext SHA-256 = %x, want %s", sum, wantHex)
 	}
+}
+
+// readLines returns the non-empty lines of a testdata file.
+func readLines(t *testing.T, path string) []string {
+	t.Helper()
+	data, err := os.ReadFile(path)
+	if err != nil {
+		t.Fatalf("read %s: %v", path, err)
+	}
+	var lines []string
+	for line := range strings.Lines(string(data)) {
+		if line = strings.TrimSpace(line); line != "" {
+			lines = append(lines, line)
+		}
+	}
+	return lines
 }
