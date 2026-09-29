@@ -4,6 +4,7 @@ import (
 	"testing"
 
 	"github.com/Tag59/cryptopals-go/internal/freq"
+	"github.com/Tag59/cryptopals-go/internal/testutil"
 	"github.com/Tag59/cryptopals-go/internal/xorutil"
 )
 
@@ -33,7 +34,7 @@ func TestChallenge06(t *testing.T) {
 	})
 
 	t.Run("break", func(t *testing.T) {
-		ct := readBase64File(t, "testdata/6.txt")
+		ct := testutil.ReadBase64File(t, "testdata/6.txt")
 
 		got, err := freq.BreakRepeatingKeyXOR(ct, 2, 40, 3)
 		if err != nil {
@@ -42,7 +43,7 @@ func TestChallenge06(t *testing.T) {
 		if len(got.Key) != 29 {
 			t.Errorf("key size = %d, want 29", len(got.Key))
 		}
-		assertSHA256(t, got.Key, "2f5170c05bb11ae64396407fde94fa5437a4cd8f1e94516d55355c5faf418622")
-		assertSHA256(t, got.Plaintext, "24df84533fc2778495577c844bcf3fe1d4d17c68d8c5cbc5a308286db58c69b6")
+		testutil.AssertSHA256(t, got.Key, "2f5170c05bb11ae64396407fde94fa5437a4cd8f1e94516d55355c5faf418622")
+		testutil.AssertSHA256(t, got.Plaintext, "24df84533fc2778495577c844bcf3fe1d4d17c68d8c5cbc5a308286db58c69b6")
 	})
 }

@@ -5,6 +5,7 @@ import (
 	"testing"
 
 	"github.com/Tag59/cryptopals-go/internal/aesutil"
+	"github.com/Tag59/cryptopals-go/internal/testutil"
 )
 
 // Challenge 8 — Detect AES in ECB mode.
@@ -13,11 +14,11 @@ import (
 // only one containing repeated blocks — no key needed to spot it.
 // Lesson: ECB leaks equality of blocks, hence structure (the "ECB penguin").
 func TestChallenge08(t *testing.T) {
-	lines := readLines(t, "testdata/8.txt")
+	lines := testutil.ReadLines(t, "testdata/8.txt")
 
 	var detected []int
 	for i, line := range lines {
-		n, err := aesutil.RepeatedBlocks(mustHex(t, line), aesutil.BlockSize)
+		n, err := aesutil.RepeatedBlocks(testutil.MustHex(t, line), aesutil.BlockSize)
 		if err != nil {
 			t.Fatalf("line %d: %v", i, err)
 		}

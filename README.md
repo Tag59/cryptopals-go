@@ -33,6 +33,7 @@ so the tests stay spoiler-free while still failing on any regression.
 | `internal/xorutil` | XOR primitives, hex/base64 conversions, Hamming distance        |
 | `internal/freq`    | English frequency scoring, single-byte & repeating-key XOR breaking |
 | `internal/aesutil` | AES block modes built by hand (ECB, CBC, CTR), PKCS#7           |
+| `internal/testutil`| Shared test helpers (fixtures decoding, pinned SHA-256 answers) |
 | `setN/`            | One `challengeNN_test.go` per challenge, data in `setN/testdata` |
 | `docs/`            | Write-ups for the flagship attacks                              |
 
