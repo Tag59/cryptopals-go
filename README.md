@@ -83,7 +83,7 @@ so the tests stay spoiler-free while still failing on any regression.
 
 | #  | Challenge                                   | Status |
 |----|---------------------------------------------|--------|
-| 25 | Break "random access read/write" AES CTR    | ⬜ |
+| 25 | Break "random access read/write" AES CTR    | ✅ |
 | 26 | CTR bitflipping                             | ⬜ |
 | 27 | Recover the key from CBC with IV=Key        | ⬜ |
 | 28 | Implement a SHA-1 keyed MAC                 | ⬜ |
