@@ -42,7 +42,7 @@ so the tests stay spoiler-free while still failing on any regression.
 
 | #  | Challenge                                   | Status |
 |----|---------------------------------------------|--------|
-| 1  | Convert hex to base64                       | ⬜ |
+| 1  | Convert hex to base64                       | ✅ |
 | 2  | Fixed XOR                                   | ⬜ |
 | 3  | Single-byte XOR cipher                      | ⬜ |
 | 4  | Detect single-character XOR                 | ⬜ |
