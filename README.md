@@ -58,7 +58,7 @@ so the tests stay spoiler-free while still failing on any regression.
 |----|---------------------------------------------|--------|
 | 9  | Implement PKCS#7 padding                    | ✅ |
 | 10 | Implement CBC mode                          | ✅ |
-| 11 | An ECB/CBC detection oracle                 | ⬜ |
+| 11 | An ECB/CBC detection oracle                 | ✅ |
 | 12 | Byte-at-a-time ECB decryption (Simple)      | ⬜ |
 | 13 | ECB cut-and-paste                           | ⬜ |
 | 14 | Byte-at-a-time ECB decryption (Harder)      | ⬜ |
