@@ -33,6 +33,7 @@ so the tests stay spoiler-free while still failing on any regression.
 | `internal/xorutil` | XOR primitives, hex/base64 conversions, Hamming distance        |
 | `internal/freq`    | English frequency scoring, single-byte & repeating-key XOR breaking |
 | `internal/aesutil` | AES block modes built by hand (ECB, CBC, CTR), PKCS#7           |
+| `internal/mt19937` | MT19937 Mersenne Twister PRNG (to be cloned and cracked)       |
 | `internal/testutil`| Shared test helpers (fixtures decoding, pinned SHA-256 answers) |
 | `setN/`            | One `challengeNN_test.go` per challenge, data in `setN/testdata` |
 | `docs/`            | Write-ups for the flagship attacks                              |
@@ -73,7 +74,7 @@ so the tests stay spoiler-free while still failing on any regression.
 | 18 | Implement CTR, the stream cipher mode       | ✅ |
 | 19 | Break fixed-nonce CTR mode using substitutions | ✅ |
 | 20 | Break fixed-nonce CTR statistically         | ✅ |
-| 21 | Implement the MT19937 Mersenne Twister RNG  | ⬜ |
+| 21 | Implement the MT19937 Mersenne Twister RNG  | ✅ |
 | 22 | Crack an MT19937 seed                       | ⬜ |
 | 23 | Clone an MT19937 RNG from its output        | ⬜ |
 | 24 | Create the MT19937 stream cipher and break it | ⬜ |
