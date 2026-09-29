@@ -21,6 +21,7 @@ using only the standard library. Every challenge is an executable, self-verifyin
 go test ./...          # every challenge
 go test -v ./set1/     # one set, verbose
 go test -run Challenge06 -v ./set1/
+go test -short ./...   # skip the timing attacks (31–32, about a minute each)
 ```
 
 Expected plaintexts are pinned by **SHA-256 digest** rather than written out in clear,
@@ -34,7 +35,8 @@ so the tests stay spoiler-free while still failing on any regression.
 | `internal/freq`    | English frequency scoring, single-byte & repeating-key XOR breaking |
 | `internal/aesutil` | AES block modes built by hand (ECB, CBC, CTR), PKCS#7           |
 | `internal/mt19937` | MT19937 Mersenne Twister PRNG (to be cloned and cracked)       |
-| `internal/mdhash`  | SHA-1, MD4 (resumable, for length extension)                   |
+| `internal/mdhash`  | SHA-1, MD4 (resumable, for length extension) and HMAC-SHA1     |
+| `internal/hrclock` | High-resolution clock for the timing attacks                   |
 | `internal/testutil`| Shared test helpers (fixtures decoding, pinned SHA-256 answers) |
 | `setN/`            | One `challengeNN_test.go` per challenge, data in `setN/testdata` |
 | `docs/`            | Write-ups for the flagship attacks                              |
@@ -90,7 +92,7 @@ so the tests stay spoiler-free while still failing on any regression.
 | 28 | Implement a SHA-1 keyed MAC                 | ✅ |
 | 29 | Break a SHA-1 keyed MAC using length extension | ✅ |
 | 30 | Break an MD4 keyed MAC using length extension | ✅ |
-| 31 | Implement and break HMAC-SHA1 with an artificial timing leak | ⬜ |
+| 31 | Implement and break HMAC-SHA1 with an artificial timing leak | ✅ |
 | 32 | Break HMAC-SHA1 with a slightly less artificial timing leak | ⬜ |
 
 ## Credits
