@@ -34,6 +34,7 @@ so the tests stay spoiler-free while still failing on any regression.
 | `internal/freq`    | English frequency scoring, single-byte & repeating-key XOR breaking |
 | `internal/aesutil` | AES block modes built by hand (ECB, CBC, CTR), PKCS#7           |
 | `internal/mt19937` | MT19937 Mersenne Twister PRNG (to be cloned and cracked)       |
+| `internal/mdhash`  | SHA-1 (resumable, for length extension)                        |
 | `internal/testutil`| Shared test helpers (fixtures decoding, pinned SHA-256 answers) |
 | `setN/`            | One `challengeNN_test.go` per challenge, data in `setN/testdata` |
 | `docs/`            | Write-ups for the flagship attacks                              |
@@ -86,7 +87,7 @@ so the tests stay spoiler-free while still failing on any regression.
 | 25 | Break "random access read/write" AES CTR    | ✅ |
 | 26 | CTR bitflipping                             | ✅ |
 | 27 | Recover the key from CBC with IV=Key        | ✅ |
-| 28 | Implement a SHA-1 keyed MAC                 | ⬜ |
+| 28 | Implement a SHA-1 keyed MAC                 | ✅ |
 | 29 | Break a SHA-1 keyed MAC using length extension | ⬜ |
 | 30 | Break an MD4 keyed MAC using length extension | ⬜ |
 | 31 | Implement and break HMAC-SHA1 with an artificial timing leak | ⬜ |
