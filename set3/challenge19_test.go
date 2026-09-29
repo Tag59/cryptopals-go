@@ -21,7 +21,7 @@ import (
 //  2. Substitutions, where statistics cannot decide:
 //     - Column 0 holds only letters, and XOR 0x20 merely swaps their case, so
 //     "I have..." and "i have..." score identically. Knowing that verse lines
-//     start with a capital settles it (fixLeadingCase).
+//     start with a capital settles it (fixLeadingColumn).
 //     - The last columns are covered by only one to three lines. Reading the
 //     partial decryption, the longest line ends in a garbled but guessable
 //     phrase ("...changed in hi? ..."). Guessing that plaintext (a "crib")
@@ -48,7 +48,7 @@ func TestChallenge19(t *testing.T) {
 	}
 	t.Logf("statistics alone: %d/%d lines fully correct", countCorrect(cts, pts, ks), len(pts))
 
-	fixLeadingCase(ks, cts)
+	fixLeadingColumn(ks, cts)
 	longest := 0
 	for i, ct := range cts {
 		if len(ct) > len(cts[longest]) {
@@ -62,19 +62,25 @@ func TestChallenge19(t *testing.T) {
 	}
 }
 
-// fixLeadingCase flips the case of column 0 when most lines would start with
-// a lowercase letter: XOR with 0x20 swaps ASCII letter case, so frequency
-// scoring alone cannot tell the two keys apart.
-func fixLeadingCase(ks []byte, cts [][]byte) {
-	lower := 0
-	for _, ct := range cts {
-		if c := ct[0] ^ ks[0]; c >= 'a' && c <= 'z' {
-			lower++
+// fixLeadingColumn re-solves column 0 with a constraint instead of letter
+// frequencies: lines of verse start with a capital letter, so pick the key
+// byte that makes the most lines do so. Column 0 is where frequency scoring
+// is weakest: it holds line initials, whose distribution is not that of
+// running English, and XOR 0x20 merely swaps the case of letters.
+func fixLeadingColumn(ks []byte, cts [][]byte) {
+	best, bestCount := ks[0], -1
+	for k := range 256 {
+		count := 0
+		for _, ct := range cts {
+			if c := ct[0] ^ byte(k); c >= 'A' && c <= 'Z' {
+				count++
+			}
+		}
+		if count > bestCount {
+			best, bestCount = byte(k), count
 		}
 	}
-	if 2*lower > len(cts) {
-		ks[0] ^= 0x20
-	}
+	ks[0] = best
 }
 
 // applyCrib aligns a guessed plaintext with the end of ct and derives the
