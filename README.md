@@ -70,7 +70,7 @@ so the tests stay spoiler-free while still failing on any regression.
 | #  | Challenge                                   | Status |
 |----|---------------------------------------------|--------|
 | 17 | The CBC padding oracle                      | ✅ |
-| 18 | Implement CTR, the stream cipher mode       | ⬜ |
+| 18 | Implement CTR, the stream cipher mode       | ✅ |
 | 19 | Break fixed-nonce CTR mode using substitutions | ⬜ |
 | 20 | Break fixed-nonce CTR statistically         | ⬜ |
 | 21 | Implement the MT19937 Mersenne Twister RNG  | ⬜ |
