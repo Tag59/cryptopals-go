@@ -38,6 +38,21 @@ func TestECBErrors(t *testing.T) {
 	}
 }
 
+func TestRepeatedBlocks(t *testing.T) {
+	key := make([]byte, 16)
+	pt := bytes.Repeat([]byte("sixteen byte blk"), 3)
+	ct, err := ECBEncrypt(key, pt)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if n, err := RepeatedBlocks(ct, BlockSize); err != nil || n != 2 {
+		t.Errorf("RepeatedBlocks = %d, %v; want 2, nil", n, err)
+	}
+	if _, err := RepeatedBlocks(ct[:20], BlockSize); !errors.Is(err, ErrNotBlockAligned) {
+		t.Errorf("unaligned: got err %v, want ErrNotBlockAligned", err)
+	}
+}
+
 func TestPKCS7RoundTrip(t *testing.T) {
 	for n := range 40 {
 		in := bytes.Repeat([]byte{'A'}, n)

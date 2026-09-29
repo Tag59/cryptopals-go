@@ -29,6 +29,27 @@ func ECBDecrypt(key, ct []byte) ([]byte, error) {
 	return ecb(key, ct, false)
 }
 
+// RepeatedBlocks counts blocks of size blockSize that duplicate an earlier
+// block in b. Under ECB, a repeated 16-byte plaintext block always yields a
+// repeated ciphertext block; under a sound mode, a collision among random
+// 128-bit blocks is astronomically unlikely. A non-zero count is therefore a
+// strong ECB fingerprint.
+func RepeatedBlocks(b []byte, blockSize int) (int, error) {
+	if blockSize < 1 || len(b)%blockSize != 0 {
+		return 0, fmt.Errorf("%w (%d bytes, block size %d)", ErrNotBlockAligned, len(b), blockSize)
+	}
+	seen := make(map[string]bool, len(b)/blockSize)
+	dups := 0
+	for i := 0; i < len(b); i += blockSize {
+		blk := string(b[i : i+blockSize])
+		if seen[blk] {
+			dups++
+		}
+		seen[blk] = true
+	}
+	return dups, nil
+}
+
 func ecb(key, in []byte, encrypt bool) ([]byte, error) {
 	block, err := aes.NewCipher(key)
 	if err != nil {
