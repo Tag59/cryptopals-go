@@ -38,12 +38,14 @@ so the tests stay spoiler-free while still failing on any regression.
 | `internal/mdhash`  | SHA-1, MD4 (resumable, for length extension) and HMAC-SHA1     |
 | `internal/hrclock` | High-resolution clock for the timing attacks                   |
 | `internal/testutil`| Shared test helpers (fixtures decoding, pinned SHA-256 answers) |
-| `setN/`            | One `challengeNN_test.go` per challenge, data in `setN/testdata` |
+| `setN/`            | One `challengeNN_test.go` per challenge, data in `setN/testdata`, summary in `setN/README.md` |
 | `docs/`            | Write-ups for the flagship attacks                              |
 
 ## Progress
 
 ### Set 1 — Basics
+
+Goal, attacks and takeaways: [set1/README.md](set1/README.md)
 
 | #  | Challenge                                   | Status |
 |----|---------------------------------------------|--------|
@@ -58,6 +60,8 @@ so the tests stay spoiler-free while still failing on any regression.
 
 ### Set 2 — Block crypto
 
+Goal, attacks and takeaways: [set2/README.md](set2/README.md)
+
 | #  | Challenge                                   | Status |
 |----|---------------------------------------------|--------|
 | 9  | Implement PKCS#7 padding                    | ✅ |
@@ -71,6 +75,8 @@ so the tests stay spoiler-free while still failing on any regression.
 
 ### Set 3 — Block & stream crypto
 
+Goal, attacks and takeaways: [set3/README.md](set3/README.md)
+
 | #  | Challenge                                   | Status |
 |----|---------------------------------------------|--------|
 | 17 | The CBC padding oracle                      | ✅ |
@@ -83,6 +89,8 @@ so the tests stay spoiler-free while still failing on any regression.
 | 24 | Create the MT19937 stream cipher and break it | ✅ |
 
 ### Set 4 — Stream crypto and randomness
+
+Goal, attacks and takeaways: [set4/README.md](set4/README.md)
 
 | #  | Challenge                                   | Status |
 |----|---------------------------------------------|--------|
