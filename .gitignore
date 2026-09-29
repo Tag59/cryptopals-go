@@ -1,0 +1,7 @@
+# Test / coverage artifacts
+*.test
+*.out
+coverage.*
+# Editors
+.vscode/
+.idea/
