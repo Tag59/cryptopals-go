@@ -36,3 +36,12 @@ func Fixed(a, b []byte) ([]byte, error) {
 	}
 	return out, nil
 }
+
+// SingleByte XORs every byte of b with the key byte k.
+func SingleByte(b []byte, k byte) []byte {
+	out := make([]byte, len(b))
+	for i, c := range b {
+		out[i] = c ^ k
+	}
+	return out
+}
