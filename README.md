@@ -76,7 +76,7 @@ so the tests stay spoiler-free while still failing on any regression.
 | 20 | Break fixed-nonce CTR statistically         | ✅ |
 | 21 | Implement the MT19937 Mersenne Twister RNG  | ✅ |
 | 22 | Crack an MT19937 seed                       | ✅ |
-| 23 | Clone an MT19937 RNG from its output        | ⬜ |
+| 23 | Clone an MT19937 RNG from its output        | ✅ |
 | 24 | Create the MT19937 stream cipher and break it | ⬜ |
 
 ### Set 4 — Stream crypto and randomness
